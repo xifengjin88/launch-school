@@ -30,3 +30,13 @@ print(f"Thousands place is {digits % 10}.")
 print('5' + '10') # this code will print 510, because it's a string concatenation operation
 
 print(int('5') + int('10'))
+
+
+foo = ['a', 'b', 'c']
+# print(foo[3])   this will raise an error, because index starts at 0 and 3 is out of range
+
+# 'foo' == 'Foo' this is falsy because f and F is not the same
+
+# print(int('3.1415')) this will raise an error
+
+# '12' < '9' this gets evaluated as True because '9' is greater than '1' lexically

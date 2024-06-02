@@ -41,3 +41,16 @@ numbers = {
 
 for key, value in numbers.items():
   print(f"A {key} number is {value}")
+
+
+import random
+
+def predict_weather():
+    sunshine = random.choice(['True', 'False'])
+
+    if sunshine:
+        print("Today's weather will be sunny!")
+    else:
+        print("Today's weather will be cloudy!")
+
+

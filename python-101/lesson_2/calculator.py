@@ -40,8 +40,9 @@ def main():
         prompt("Hmm... that doesn't look like a valid number.")
         number2 = input()
 
-    prompt("What operation would you like to perform?")
-    prompt("1) Add 2) Subtract 3) Multiply 4) Divide")
+    prompt("""What operation would you like to perform
+1) Add 2) Subtract 3) Multiply 4) Divide""")
+# rest of the code omitted
     operation = input()
     while not valid_operation(operation):
         prompt('You must choose 1, 2, 3, or 4')

@@ -1,40 +1,54 @@
-
-def is_digit(n):
-    return n.isnumeric()
-
-def is_operator(c):
-    return c in ["*", "/", "+", "-"]
+def prompt(msg):
+    print(f"==> {msg}")
 
 
-def validate(n, predicate, error_message, prompt):
-    while not predicate(n):
-        print(error_message)
-        n = input(prompt)
-    return n
+def valid_number(n):
+    try:
+        int(n)
+    except ValueError:
+        return False
+    return True
 
-def calculate(n, m, operator):
-    match operator:
-        case "+":
-            return n + m
-        case "-":
-            return n - m
-        case "/":
-            return n / m
-        case "*":
-            return n * m
-    
+
+def valid_operation(o):
+    return o in ['1', '2', '3', '4']
+
+
+def calculate(num1, num2, operation):
+    match operation:
+        case "1":
+            return num1 + num2
+        case "2":
+            return num1 - num2
+        case "3":
+            return num1 * num2
+        case "4":
+            return num1 / num2
 
 
 def main():
-    num1 = input("Enter number 1: ")
-    num1 = validate(num1, is_digit, f"Value {num1} is not valid, please enter a number", "Enter number 1: ")
-    num2 = input("Enter number 2: ")
-    num2 = validate(num2, is_digit, f"Value {num2} is not valid, please enter a number", "Enter number 2: ")
-    operator = input("Enter an operator: ")
-    operator = validate(operator, is_operator, f"Operator {operator} is not valid, please enter a  valid operator. ", "Enter an operator: ")
-    result = calculate(int(num1), int(num2), operator)
-    print(f"{num1} {operator} {num2} = {result}")
-  
+    prompt("Welcome to calculator!")
+    prompt("What is your first number? ")
+    number1 = input()
+    while not valid_number(number1):
+        prompt("Hmm... that doesn't look like a valid number.")
+        number1 = input()
+
+    prompt("What is your second number? ")
+    number2 = input()
+    while not valid_number(number2):
+        prompt("Hmm... that doesn't look like a valid number.")
+        number2 = input()
+
+    prompt("What operation would you like to perform?")
+    prompt("1) Add 2) Subtract 3) Multiply 4) Divide")
+    operation = input()
+    while not valid_operation(operation):
+        prompt('You must choose 1, 2, 3, or 4')
+        operation = input()
+
+    result = calculate(int(number1), int(number2), operation)
+    prompt(f"Result is {result}")
 
 
 main()

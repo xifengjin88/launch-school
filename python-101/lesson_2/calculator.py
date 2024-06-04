@@ -1,3 +1,12 @@
+import json
+
+with open("calculator_messages.json", "r") as file:
+    data = json.load(file)
+
+
+message = data["zh"]
+
+
 def prompt(msg):
     print(f"==> {msg}")
 
@@ -26,30 +35,39 @@ def calculate(num1, num2, operation):
             return num1 / num2
 
 
-def main():
-    prompt("Welcome to calculator!")
-    prompt("What is your first number? ")
+def game():
+    prompt(message["first_number"])
     number1 = input()
     while not valid_number(number1):
-        prompt("Hmm... that doesn't look like a valid number.")
+        prompt(message["number_validation"])
         number1 = input()
 
-    prompt("What is your second number? ")
+    prompt(message["second_number"])
     number2 = input()
     while not valid_number(number2):
-        prompt("Hmm... that doesn't look like a valid number.")
+        prompt(message["number_validation"])
         number2 = input()
 
-    prompt("""What operation would you like to perform
-1) Add 2) Subtract 3) Multiply 4) Divide""")
+    prompt(message["operation"])
 # rest of the code omitted
     operation = input()
     while not valid_operation(operation):
-        prompt('You must choose 1, 2, 3, or 4')
+        prompt(message["operation_validation"])
         operation = input()
 
-    result = calculate(int(number1), int(number2), operation)
+    result = calculate(float(number1), float(number2), operation)
     prompt(f"Result is {result}")
+
+
+def main():
+    prompt(message["greeting"])
+
+    while True:
+        game()
+        prompt(message["play_again"])
+        response = input()
+        if response != "y":
+            break
 
 
 main()

@@ -1,0 +1,20 @@
+{
+  "en": {
+    "greeting": "Welcome to calculator!",
+    "first_number": "What is your first number? ",
+    "second_number": "What is your second number? ",
+    "operation": "What operation would you like to perform\n1) Add 2) Subtract 3) Multiply 4) Divide",
+    "number_validation": "Hmm... that doesn't look like a valid number.",
+    "operation_validation": "You must choose 1, 2, 3, or 4",
+    "play_again": "Would you like to play again? (y|n)"
+  },
+  "zh": {
+    "greeting": "欢迎使用计算器！",
+    "first_number": "请输入第一个数字：",
+    "second_number": "请输入第二个数字：",
+    "operation": "请选择要执行的操作：\n1) 加 2) 减 3) 乘 4) 除",
+    "number_validation": "嗯...这看起来不像一个有效的数字。",
+    "operation_validation": "你必须选择 1、2、3 或 4",
+    "play_again": "你想再玩一次吗？(y|n)"
+  }
+}

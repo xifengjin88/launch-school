@@ -1,4 +1,5 @@
 import random
+import os
 
 
 def prompt(msg):
@@ -6,6 +7,7 @@ def prompt(msg):
 
 
 def display_board(board):
+    os.system("clear")
     print("\n".join([" ".join(board[i:i + 3]) for i in range(0, 9, 3)]))
 
 

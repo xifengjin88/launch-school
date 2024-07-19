@@ -1,9 +1,9 @@
-
 import random
 
 USER_PIECE = "X"
 COMPUTER_PIECE = "O"
 INITIAL_MARK = " "
+TOTAL_SCORE = 5
 
 WINNING_LINES = [
     [1, 2, 3],
@@ -22,7 +22,6 @@ def prompt(msg):
 
 
 def display_board(board):
-
     print()
     print("     |     |     ")
     print(f"  {board[1]}  |  {board[2]}  |   {board[3]}  ")
@@ -92,11 +91,12 @@ def has_won(board):
 
 def game():
     prompt("Welcome to Tic Tac Toe!")
-
     user_score = 0
     computer_score = 0
 
     def play():
+        nonlocal user_score, computer_score
+
         board = initialize_board()
 
         display_board(board)
@@ -111,16 +111,29 @@ def game():
         display_board(board)
         if has_won(board):
             final_winner = winner(board)
-            print("You won!") if final_winner == USER_PIECE else print("Computer Won!")
+
+            if final_winner == USER_PIECE:
+                prompt(f"You won this round! your current score is {user_score + 1}")
+                user_score += 1
+            else:
+                prompt(f"Computer won this round! computer current score is {computer_score + 1}")
+                computer_score += 1
         else:
-            print("It's a tie!")
+            prompt("It's a tie!")
 
     while True:
         play()
-        prompt("Would you like to play again?")
-        play_again = input()
-        if play_again in ["n", "N"]:
-            break
+        if user_score == TOTAL_SCORE or computer_score == TOTAL_SCORE:
+            prompt(f"Computer has won {TOTAL_SCORE} games") if computer_score == TOTAL_SCORE else prompt(
+                f"You have won {TOTAL_SCORE} games")
+            prompt("Would you like to play again?")
+            play_again = input()
+            if play_again in ["n", "N"]:
+                break
+            user_score = 0
+            computer_score = 0
+
     prompt("Thank you for playing!")
+
 
 game()

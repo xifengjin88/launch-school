@@ -5,6 +5,9 @@ COMPUTER_PIECE = "O"
 INITIAL_MARK = " "
 TOTAL_SCORE = 5
 
+COMPUTER_PLAYER = "COMPUTER"
+HUMAN_PLAYER = "HUMAN"
+
 WINNING_LINES = [
     [1, 2, 3],
     [4, 5, 6],
@@ -70,9 +73,28 @@ def player_place_move(board):
     board[user_move] = USER_PIECE
 
 
+def place_move(board, current_player):
+    player_place_move(board) if current_player == HUMAN_PLAYER else computer_place_move(board)
+
+def alternate_player(current_player):
+    return COMPUTER_PLAYER if current_player == HUMAN_PLAYER else HUMAN_PLAYER
+
 def computer_place_move(board):
     available_squares = find_available_squares(board)
+    next_defense = computer_strategy(board)
+    next_offense = computer_strategy(board, COMPUTER_PIECE)
+
+    if not available_squares:
+        return
+
     computer_move = random.choice(available_squares)
+    if 5 in available_squares:
+        computer_move = 5
+    elif next_offense in available_squares:
+        computer_move = next_offense
+    elif next_defense in available_squares:
+        computer_move = next_defense
+
     board[computer_move] = COMPUTER_PIECE
 
 
@@ -89,6 +111,28 @@ def has_won(board):
     return bool(winner(board))
 
 
+def pick_player():
+    valid_players = [COMPUTER_PLAYER, HUMAN_PLAYER]
+    while True:
+
+        prompt(f"Would you like to play first or computer first? ({COMPUTER_PLAYER} | {HUMAN_PLAYER})")
+        answer = input()
+        if answer in valid_players:
+            return answer
+        prompt(f"Please enter either {COMPUTER_PLAYER} or {HUMAN_PLAYER}")
+
+
+def computer_strategy(board, piece=USER_PIECE):
+    for winning_line in WINNING_LINES:
+        first, second, third = winning_line
+        if board[first] == piece and board[second] == piece and board[third] == INITIAL_MARK:
+            return third
+        elif board[first] == piece and board[third] == piece and board[second] == INITIAL_MARK:
+            return second
+        elif board[second] == piece and board[third] == piece and board[first] == INITIAL_MARK:
+            return first
+
+
 def game():
     prompt("Welcome to Tic Tac Toe!")
     user_score = 0
@@ -99,12 +143,12 @@ def game():
 
         board = initialize_board()
 
-        display_board(board)
+        current_player = pick_player()
+
         while True:
-            player_place_move(board)
-            if has_won(board) or board_full(board):
-                break
-            computer_place_move(board)
+            display_board(board)
+            place_move(board, current_player)
+            current_player = alternate_player(current_player)
             if has_won(board) or board_full(board):
                 break
             display_board(board)

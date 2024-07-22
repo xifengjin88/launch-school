@@ -1,5 +1,3 @@
-import random
-
 USER_PIECE = "X"
 COMPUTER_PIECE = "O"
 INITIAL_MARK = " "
@@ -65,7 +63,6 @@ def player_place_move(board):
 
     while True:
         prompt(f"Pick a piece: {join_or(available_squares)}")
-
         user_move = int(input())
         if user_move in available_squares:
             break
@@ -76,25 +73,26 @@ def player_place_move(board):
 def place_move(board, current_player):
     player_place_move(board) if current_player == HUMAN_PLAYER else computer_place_move(board)
 
+
 def alternate_player(current_player):
     return COMPUTER_PLAYER if current_player == HUMAN_PLAYER else HUMAN_PLAYER
 
+
 def computer_place_move(board):
     available_squares = find_available_squares(board)
-    next_defense = computer_strategy(board)
-    next_offense = computer_strategy(board, COMPUTER_PIECE)
+    # next_defense = computer_strategy(board)
+    # next_offense = computer_strategy(board, COMPUTER_PIECE)
+    # if 5 in available_squares:
+    #     computer_move = 5
+    # elif next_offense in available_squares:
+    #     computer_move = next_offense
+    # elif next_defense in available_squares:
+    #     computer_move = next_defense
 
     if not available_squares:
         return
 
-    computer_move = random.choice(available_squares)
-    if 5 in available_squares:
-        computer_move = 5
-    elif next_offense in available_squares:
-        computer_move = next_offense
-    elif next_defense in available_squares:
-        computer_move = next_defense
-
+    computer_move = best_move(board)
     board[computer_move] = COMPUTER_PIECE
 
 
@@ -114,7 +112,6 @@ def has_won(board):
 def pick_player():
     valid_players = [COMPUTER_PLAYER, HUMAN_PLAYER]
     while True:
-
         prompt(f"Would you like to play first or computer first? ({COMPUTER_PLAYER} | {HUMAN_PLAYER})")
         answer = input()
         if answer in valid_players:
@@ -133,6 +130,12 @@ def computer_strategy(board, piece=USER_PIECE):
             return first
 
 
+def updated_board(board, square, piece):
+    board_copy = board.copy()
+    board_copy[square] = piece
+    return board_copy
+
+
 def game():
     prompt("Welcome to Tic Tac Toe!")
     user_score = 0
@@ -140,9 +143,7 @@ def game():
 
     def play():
         nonlocal user_score, computer_score
-
         board = initialize_board()
-
         current_player = pick_player()
 
         while True:
@@ -155,7 +156,6 @@ def game():
         display_board(board)
         if has_won(board):
             final_winner = winner(board)
-
             if final_winner == USER_PIECE:
                 prompt(f"You won this round! your current score is {user_score + 1}")
                 user_score += 1
@@ -178,6 +178,24 @@ def game():
             computer_score = 0
 
     prompt("Thank you for playing!")
+
+
+def minmax_strategy(board, current_player):
+    if has_won(board):
+        return 10 if current_player == HUMAN_PLAYER else -10
+    if board_full(board):
+        return 0
+
+    return (max if current_player == COMPUTER_PLAYER else min)(
+        [minmax_strategy(
+            updated_board(board, square, COMPUTER_PIECE if current_player == COMPUTER_PLAYER else USER_PIECE),
+            alternate_player(current_player)) for square in find_available_squares(board)]
+    )
+
+
+def best_move(board):
+    return max([(minmax_strategy(updated_board(board, square, COMPUTER_PIECE), HUMAN_PLAYER), square) for square in
+                find_available_squares(board)])[1]
 
 
 game()

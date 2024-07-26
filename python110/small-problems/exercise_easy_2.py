@@ -98,6 +98,7 @@ def sequence(count, initial_value):
 
     return result
 
+
 def reverse_list(lst):
     start = 0
     end = len(lst) - 1
@@ -106,6 +107,7 @@ def reverse_list(lst):
         start += 1
         end -= 1
     return lst
+
 
 def is_balanced(s):
     stack = []

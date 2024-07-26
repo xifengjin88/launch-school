@@ -136,6 +136,7 @@ def string_to_signed_integer(s):
             result = result * 10 + digits[char]
     return result if sign is None or sign == "+" else -result
 
+
 def integer_to_string(num):
     result = ""
     digits = {}
@@ -150,7 +151,7 @@ def integer_to_string(num):
     return result
 
 
-print(integer_to_string(4321) == "4321")              # True
-print(integer_to_string(0) == "0")                    # True
-print(integer_to_string(5000) == "5000")              # True
+print(integer_to_string(4321) == "4321")  # True
+print(integer_to_string(0) == "0")  # True
+print(integer_to_string(5000) == "5000")  # True
 print(integer_to_string(1234567890) == "1234567890")  # True

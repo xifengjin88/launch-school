@@ -73,3 +73,23 @@ def is_item_available(tid, transactions):
         elif transaction["movement"] == "out":
             total -= transaction["quantity"]
     return total > 0
+
+def time_of_day(minutes):
+    min_part = int(minutes % 60)
+    if minutes == 60:
+        min_part = 0
+
+    return min_part
+
+
+print(time_of_day(0))        # True
+print(time_of_day(-3))       # True
+print(time_of_day(35))       # True
+print(time_of_day(-1437))    # True
+print(time_of_day(3000))     # True
+print(time_of_day(800))      # True
+print(time_of_day(-4231))    # True
+
+
+
+
